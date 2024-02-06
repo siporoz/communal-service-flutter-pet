@@ -37,6 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^6.1.1
   google_fonts: ^6.1.0
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  build_runner: ^2.4.8
+  isar_generator: ^3.1.0+1
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:
