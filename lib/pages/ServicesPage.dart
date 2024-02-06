@@ -88,7 +88,7 @@ class _ServicesPageState extends State<ServicesPage> {
     final serviceDatabase = context.watch<ServiceDatabase>();
 
     // current services
-    List<Service> currentServices = serviceDatabase.currentNotes;
+    List<Service> currentServices = serviceDatabase.currentService;
 
     return Scaffold(
       appBar: AppBar(

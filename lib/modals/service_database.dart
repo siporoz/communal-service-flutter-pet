@@ -13,7 +13,7 @@ class ServiceDatabase extends ChangeNotifier {
   }
 
   // list of notes
-  final List<Service> currentNotes = [];
+  final List<Service> currentService = [];
 
   // Create
   Future<void> addService(String text, String image) async {
@@ -32,13 +32,13 @@ class ServiceDatabase extends ChangeNotifier {
   // READ
   Future<void> fetchServices() async {
     List<Service> fetchedNotes = await isar.services.where().findAll();
-    currentNotes.clear();
-    currentNotes.addAll(fetchedNotes);
+    currentService.clear();
+    currentService.addAll(fetchedNotes);
     notifyListeners();
   }
 
   // UPDATE
-  Future<void> updateNote(int id, String newText) async {
+  Future<void> updateService(int id, String newText) async {
     final existingNote = await isar.services.get(id);
     if (existingNote != null) {
       existingNote.text = newText;
@@ -48,7 +48,7 @@ class ServiceDatabase extends ChangeNotifier {
   }
 
   // DELETE
-  Future<void> deleteNote(int id) async {
+  Future<void> deleteService(int id) async {
     await isar.writeTxn(() => isar.services.delete(id));
     await fetchServices();
   }
