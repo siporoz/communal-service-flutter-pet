@@ -38,31 +38,35 @@ class _ServicesPageState extends State<ServicesPage> {
         return Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                'Новый платеж',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
             Container(
-              height: 200,
               child: Column(children: [
-                TextField(
-                  controller: textController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Название платежа',
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    'Новый платеж',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                )
-              ])
+                ),
+                Container(
+                  height: 200,
+                  child: Column(children: [
+                    TextField(
+                      controller: textController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Название платежа',
+                      ),
+                    )
+                  ])
+                ),
+              ]),
             ),
-            const SizedBox(height: 16),
+            const Spacer(),
             TextButton(
               onPressed: () {
                 context.read<ServiceDatabase>().addService(textController.text, textController.text);
@@ -104,9 +108,12 @@ class _ServicesPageState extends State<ServicesPage> {
         ),
       ),
       drawer: const MyDrawer(),
-      body: Padding(
+      body:
+       Padding(
         padding: const EdgeInsets.all(16.0),
-        child: GridView.count(
+        child:
+          currentServices.isNotEmpty
+          ? GridView.count(
           crossAxisCount: 1, // количество столбцов
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
@@ -114,9 +121,19 @@ class _ServicesPageState extends State<ServicesPage> {
           childAspectRatio: (1 / .4),
           children: [
             for (var item in currentServices)
-              CommunalItem(name: item.text, payed: false)
+              CommunalItem(name: item.text, payed: false, id: item.id)
           ],
         )
+        :
+        Center(
+          child: Text(
+            'На текущий момент у вас нет сервисов для оплаты',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.playfairDisplay(
+              fontSize: 16,
+              color: Theme.of(context).colorScheme.inversePrimary
+            )
+          ))
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: addServiceModal,
