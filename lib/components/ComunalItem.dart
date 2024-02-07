@@ -20,9 +20,6 @@ class CommunalItem extends StatelessWidget {
 
     // Delete item
     void deleteService() {
-      print('deleteService');
-      print('deleteService');
-      print('deleteService');
       context.read<ServiceDatabase>().deleteService(id);
     }
 
@@ -41,6 +38,10 @@ class CommunalItem extends StatelessWidget {
                 color: Theme.of(context).colorScheme.inversePrimary
               )
             ),
+            payed ?
+              Text('Оплачено')
+              : Text('Не оплачено')
+            ,
             Positioned(
               top: 8.0,
               right: 8.0,

@@ -35,61 +35,88 @@ class _SelectMonthState extends State<SelectMonth> {
     "Декабрь"
   ];
 
-  // This shows a CupertinoModalPopup with a reasonable fixed height which hosts CupertinoPicker.
   void _showDialog() {
     showCupertinoModalPopup<void>(
       context: context,
-      builder: (BuildContext context) => Container(
-        height: 320,
-        margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        color: CupertinoColors.systemBackground.resolveFrom(context),
-        child: CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            border: null,
-            middle: Column(
-              children: [
-                Text(
-                  'Выберете месяц',
-                  style: GoogleFonts.playfairDisplay(
-                    fontSize: 18,
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                  ),
+      builder: (BuildContext context) => Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            height: 320,
+            margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            color: CupertinoColors.systemBackground.resolveFrom(context),
+            child: CupertinoPageScaffold(
+              navigationBar: CupertinoNavigationBar(
+                border: null,
+                backgroundColor: Theme.of(context).colorScheme.background,
+                middle: Column(
+                  children: [
+                    Text(
+                      'Выберете месяц',
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 18,
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                  ],
                 ),
-                const SizedBox(height: 10),
-              ],
+                automaticallyImplyLeading: false,
+                automaticallyImplyMiddle: false,
+              ),
+              child: CupertinoPicker(
+                magnification: 1.22,
+                squeeze: 1.2,
+                useMagnifier: true,
+                itemExtent: 32,
+                scrollController: FixedExtentScrollController(
+                  initialItem: _selectedFruit,
+                ),
+                onSelectedItemChanged: (int selectedItem) {
+                  setState(() {
+                    _selectedFruit = selectedItem;
+                  });
+                },
+                children:
+                    List<Widget>.generate(_fruitNames.length, (int index) {
+                    return Center(child:
+                      Text(
+                        _fruitNames[index],
+                        style: GoogleFonts.playfairDisplay(
+                          fontSize: 22  ,
+                          color: Theme.of(context).colorScheme.inversePrimary
+                      ),
+                    )
+                  );
+                }),
+              ),
             ),
-            automaticallyImplyLeading: false,
-            automaticallyImplyMiddle: false,
           ),
-          child: CupertinoPicker(
-            magnification: 1.22,
-            squeeze: 1.2,
-            useMagnifier: true,
-            itemExtent: 32,
-            scrollController: FixedExtentScrollController(
-              initialItem: _selectedFruit,
-            ),
-            onSelectedItemChanged: (int selectedItem) {
-              setState(() {
-                _selectedFruit = selectedItem;
-              });
-            },
-            children:
-                List<Widget>.generate(_fruitNames.length, (int index) {
-                return Center(child:
-                  Text(
-                    _fruitNames[index],
-                    style: GoogleFonts.playfairDisplay(
-                      fontSize: 22  ,
-                      color: Theme.of(context).colorScheme.inversePrimary
-                  ),
-                )
-              );
-            }),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Container(
+                  color: Theme.of(context).colorScheme.background,
+                  child: TextButton(
+                    onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.inversePrimary),
+                      ),
+                      child: const Text(
+                        'Выбрать'
+                      ),
+                    ),
+                ),
+              ),
+            ],
           ),
-        ),
+        ],
       ),
     );
   }
