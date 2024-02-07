@@ -1,7 +1,9 @@
 import 'package:communal_services_app/components/ComunalItem.dart';
+import 'package:communal_services_app/components/SelectMonth.dart';
 import 'package:communal_services_app/components/drawer.dart';
 import 'package:communal_services_app/modals/service.dart';
 import 'package:communal_services_app/modals/service_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +76,7 @@ class _ServicesPageState extends State<ServicesPage> {
                 Navigator.pop(context);
               },
               style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                foregroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.inversePrimary),
               ),
               child: const Text('Добавить'),
             ),
@@ -100,12 +102,15 @@ class _ServicesPageState extends State<ServicesPage> {
         backgroundColor: Colors.transparent,
         foregroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(
-          'Платежи',
+          'Мой ЖКХ',
           style: GoogleFonts.playfairDisplay(
-            fontSize: 28,
+            fontSize: 26,
             color: Theme.of(context).colorScheme.inversePrimary
           )
         ),
+        actions: [
+          SelectMonth(),
+        ]
       ),
       drawer: const MyDrawer(),
       body:
@@ -118,7 +123,7 @@ class _ServicesPageState extends State<ServicesPage> {
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
           shrinkWrap: true,
-          childAspectRatio: (1 / .4),
+          childAspectRatio: (1 / .3),
           children: [
             for (var item in currentServices)
               CommunalItem(name: item.text, payed: false, id: item.id)
